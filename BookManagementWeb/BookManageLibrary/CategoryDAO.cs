@@ -78,7 +78,7 @@ namespace BookManageLibrary
                 if (cate == null)
                 {
                     using var context = new BookManagementDBContext();
-                    context.TblCategories.Add(cate);
+                    context.TblCategories.Add(Category);
                     context.SaveChanges();
                 }
                 else
@@ -100,7 +100,7 @@ namespace BookManageLibrary
                 if (cate != null)
                 {
                     using var context = new BookManagementDBContext();
-                    context.TblCategories.Update(cate);
+                    context.TblCategories.Update(Category);
                     context.SaveChanges();
                 }
                 else

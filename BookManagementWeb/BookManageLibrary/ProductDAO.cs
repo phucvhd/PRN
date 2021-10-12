@@ -108,7 +108,7 @@ namespace BookManageLibrary
                 if (product == null)
                 {
                     using var context = new BookManagementDBContext();
-                    context.TblProducts.Add(product);
+                    context.TblProducts.Add(Product);
                     context.SaveChanges();
                 }
                 else
@@ -130,7 +130,7 @@ namespace BookManageLibrary
                 if (product != null)
                 {
                     using var context = new BookManagementDBContext();
-                    context.TblProducts.Update(product);
+                    context.TblProducts.Update(Product);
                     context.SaveChanges();
                 }
                 else

@@ -41,7 +41,7 @@ namespace BookManageLibrary
             return SuppliersReports;
         }
 
-        public IEnumerable<SuppliersReport> GetSuppliersReportBySupplierID(string supplierID)
+        public IEnumerable<SuppliersReport> GetSuppliersReportsBySupplierID(string supplierID)
         {
             var SuppliersReports = new List<SuppliersReport>();
             try
@@ -57,7 +57,7 @@ namespace BookManageLibrary
             return SuppliersReports;
         }
 
-        public IEnumerable<SuppliersReport> GetSuppliersReportByProductID(string proID)
+        public IEnumerable<SuppliersReport> GetSuppliersReportsByProductID(string proID)
         {
             var SuppliersReports = new List<SuppliersReport>();
             try

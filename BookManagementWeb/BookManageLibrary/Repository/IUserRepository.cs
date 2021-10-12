@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookManageLibrary.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace BookManageLibrary.Repository
 {
     public interface IUserRepository
     {
-
+        IEnumerable<User> GetUsers();
+        User GetUserByEmail(string userEmail);
+        void InsertUser(User user);
+        void DeleteUser(string userEmail);
+        void UpdateUser(User user);
     }
 }

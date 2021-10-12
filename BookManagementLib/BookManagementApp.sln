@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31229.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManagementLib", "BookManagementLib.csproj", "{9DBAD1C6-3163-412F-8B38-B1B7A9982B8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagementWeb", "..\BookManagementWeb\BookManagementWeb.csproj", "{DB017293-7156-4C54-A458-5C00AF1E23F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DBAD1C6-3163-412F-8B38-B1B7A9982B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DBAD1C6-3163-412F-8B38-B1B7A9982B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DBAD1C6-3163-412F-8B38-B1B7A9982B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DBAD1C6-3163-412F-8B38-B1B7A9982B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB017293-7156-4C54-A458-5C00AF1E23F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB017293-7156-4C54-A458-5C00AF1E23F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB017293-7156-4C54-A458-5C00AF1E23F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB017293-7156-4C54-A458-5C00AF1E23F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3206143-6C25-4974-9F92-DBD3A1ED00E3}
+	EndGlobalSection
+EndGlobal

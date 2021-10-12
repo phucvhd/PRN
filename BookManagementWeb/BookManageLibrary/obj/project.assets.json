@@ -5968,11 +5968,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VS.NET\\BookManagementWeb\\BookManageLibrary\\BookManageLibrary.csproj",
+      "projectUniqueName": "D:\\VS.NET\\PRN_asm\\BookManagementWeb\\BookManageLibrary\\BookManageLibrary.csproj",
       "projectName": "BookManageLibrary",
-      "projectPath": "D:\\VS.NET\\BookManagementWeb\\BookManageLibrary\\BookManageLibrary.csproj",
+      "projectPath": "D:\\VS.NET\\PRN_asm\\BookManagementWeb\\BookManageLibrary\\BookManageLibrary.csproj",
       "packagesPath": "C:\\Users\\Steve\\.nuget\\packages\\",
-      "outputPath": "D:\\VS.NET\\BookManagementWeb\\BookManageLibrary\\obj\\",
+      "outputPath": "D:\\VS.NET\\PRN_asm\\BookManagementWeb\\BookManageLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Steve\\AppData\\Roaming\\NuGet\\NuGet.Config",

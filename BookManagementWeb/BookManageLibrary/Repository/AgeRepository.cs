@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookManageLibrary.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace BookManageLibrary.Repository
 {
-    class AgeRepository
+    class AgeRepository : IAgeRepository
     {
+        public Age GetAgeByID(string ForAgesId) => AgeDAO.Instance.GetAgeByID(ForAgesId);
+        public IEnumerable<Age> GetAges() => AgeDAO.Instance.GetAgeList();
+        public void InsertAge(Age age) => AgeDAO.Instance.Insert(age);
+        public void DeleteAge(string ForAgesId) => AgeDAO.Instance.Remove(ForAgesId);
+        public void UpdateAge(Age age) => AgeDAO.Instance.Update(age);
     }
 }

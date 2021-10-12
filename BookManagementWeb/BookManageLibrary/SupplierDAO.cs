@@ -78,7 +78,7 @@ namespace BookManageLibrary
                 if (sup == null)
                 {
                     using var context = new BookManagementDBContext();
-                    context.TblSuppliers.Add(sup);
+                    context.TblSuppliers.Add(Supplier);
                     context.SaveChanges();
                 }
                 else
@@ -100,7 +100,7 @@ namespace BookManageLibrary
                 if (sup != null)
                 {
                     using var context = new BookManagementDBContext();
-                    context.TblSuppliers.Update(sup);
+                    context.TblSuppliers.Update(Supplier);
                     context.SaveChanges();
                 }
                 else

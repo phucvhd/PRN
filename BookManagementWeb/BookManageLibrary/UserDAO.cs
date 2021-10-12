@@ -45,7 +45,7 @@ namespace BookManageLibrary
             try
             {
                 using var context = new BookManagementDBContext();
-                User = context.TblUsers.SingleOrDefault(m => m.Email == email);
+                User = context.TblUsers.SingleOrDefault(m => m.Email.Equals(email));
             }
             catch (Exception ex)
             {
