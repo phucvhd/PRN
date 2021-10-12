@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QaLTSlSwoAAXyg0wh0dxyBjqKvzRImXYwjuZrjWbxaPNdLwZGP2k8SnmH/WnrL06pji2kivqLsX+p9LlE1khWA==",
+  "dgSpecHash": "MFoFOiz0cMVs0S9mszm6iKUi9HGQQ94VDciND9vMxSZ2IpsCaIJdgFjhxJSflHQKezPjhb/B3whMPUqjRZ3c9Q==",
   "success": true,
-  "projectFilePath": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementLib\\BookManagementLib.csproj",
+  "projectFilePath": "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Steve\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Steve\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

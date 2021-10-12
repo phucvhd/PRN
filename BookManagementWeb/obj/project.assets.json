@@ -7135,11 +7135,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementWeb\\BookManagementWeb.csproj",
+      "projectUniqueName": "D:\\VS.NET\\PRN_asm\\BookManagementWeb\\BookManagementWeb.csproj",
       "projectName": "BookManagementWeb",
-      "projectPath": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementWeb\\BookManagementWeb.csproj",
+      "projectPath": "D:\\VS.NET\\PRN_asm\\BookManagementWeb\\BookManagementWeb.csproj",
       "packagesPath": "C:\\Users\\Steve\\.nuget\\packages\\",
-      "outputPath": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementWeb\\obj\\",
+      "outputPath": "D:\\VS.NET\\PRN_asm\\BookManagementWeb\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Steve\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7156,8 +7156,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementLib\\BookManagementLib.csproj": {
-              "projectPath": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementLib\\BookManagementLib.csproj"
+            "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj": {
+              "projectPath": "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj"
             }
           }
         }

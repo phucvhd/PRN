@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementLib\\BookManagementLib.csproj": {}
+    "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj": {}
   },
   "projects": {
-    "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementLib\\BookManagementLib.csproj": {
+    "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementLib\\BookManagementLib.csproj",
+        "projectUniqueName": "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj",
         "projectName": "BookManagementLib",
-        "projectPath": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementLib\\BookManagementLib.csproj",
+        "projectPath": "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj",
         "packagesPath": "C:\\Users\\Steve\\.nuget\\packages\\",
-        "outputPath": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementLib\\obj\\",
+        "outputPath": "D:\\VS.NET\\PRN_asm\\BookManagementLib\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Steve\\AppData\\Roaming\\NuGet\\NuGet.Config",

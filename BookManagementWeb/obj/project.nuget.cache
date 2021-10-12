@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NIfyWFQsLPFVK0W83iJ3gmIjebAi0gKjHQ++qVTVUyWwPLX8InkxoBwaCmCFs+jhCyjTDF4u4BfzLNeygOPq6Q==",
+  "dgSpecHash": "PLIZSOz6iRrjrneJi8rgWjOo+rHamsOcUtZutUiOXIbA5KvTbe72lKWygVam8BRFxu/93cqLCyzf/AUjwUamPQ==",
   "success": true,
-  "projectFilePath": "D:\\VS.NET\\FU\\BookManagementWebSolution\\BookManagementWeb\\BookManagementWeb.csproj",
+  "projectFilePath": "D:\\VS.NET\\PRN_asm\\BookManagementWeb\\BookManagementWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Steve\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Steve\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
