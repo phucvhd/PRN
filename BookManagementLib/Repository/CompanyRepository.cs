@@ -11,7 +11,7 @@ namespace BookManagementLib.Repository
     {
         public Company GetCompanyByID(string CompanyId) => CompanyDAO.Instance.GetCompanyByID(CompanyId);
         public Company GetCompanyByName(string CompanyName) => CompanyDAO.Instance.GetCompanyByName(CompanyName);
-        public IEnumerable<Company> GetCompanys() => CompanyDAO.Instance.GetCompanyList();
+        public IEnumerable<Company> GetCompanies() => CompanyDAO.Instance.GetCompanyList();
         public void InsertCompany(Company Company) => CompanyDAO.Instance.Insert(Company);
         public void DeleteCompany(string CompanyId) => CompanyDAO.Instance.Remove(CompanyId);
         public void UpdateCompany(Company Company) => CompanyDAO.Instance.Update(Company);

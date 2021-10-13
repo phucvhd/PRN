@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BookManagementLib.DataAccess;
 using BookManagementLib.Repository;
 using System.Dynamic;
+using Newtonsoft.Json;
 
 namespace BookManagementWeb.Models
 {
@@ -55,13 +56,17 @@ namespace BookManagementWeb.Models
         {
             try
             {
+                ViewData["forAgeList"] = ageRepository.GetAges();
+                ViewData["categoryList"] = categoryRepository.GetCategories();
+                ViewBag.newid = productRepository.ProductIdGenerate();
                 if (ModelState.IsValid)
                 {
                     product.CreatedDate = DateTime.Now;
                     product.LastModified = DateTime.Now;
                     productRepository.InsertProduct(product);
+                    TempData["product"] = product.ProductId;
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create),"Reports");
             }
             catch (Exception ex)
             {
@@ -95,6 +100,8 @@ namespace BookManagementWeb.Models
         {
             try
             {
+                ViewData["forAgeList"] = ageRepository.GetAges();
+                ViewData["categoryList"] = categoryRepository.GetCategories();
                 if (id != product.ProductId)
                 {
                     return NotFound();

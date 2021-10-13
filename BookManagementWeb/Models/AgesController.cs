@@ -14,10 +14,10 @@ namespace BookManagementWeb.Models
         IAgeRepository AgeRepository = null;
         public AgesController() => AgeRepository = new AgeRepository();
         // GET: AgesController
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string searchString, string notify)
         {
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
-            
+            ViewBag.Notify = notify;
             var AgesList = AgeRepository.GetAges();
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -72,7 +72,7 @@ namespace BookManagementWeb.Models
                 {
                     AgeRepository.InsertAge(Age);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new { notify = "Create success !" });
             }
             catch (Exception ex)
             {
@@ -107,7 +107,7 @@ namespace BookManagementWeb.Models
                 {
                     AgeRepository.UpdateAge(Age);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new { notify = "Update success !" });
             }
             catch (Exception ex)
             {
@@ -139,7 +139,7 @@ namespace BookManagementWeb.Models
             try
             {
                 AgeRepository.DeleteAge(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Delete success !" });
             }
             catch (Exception ex)
             {

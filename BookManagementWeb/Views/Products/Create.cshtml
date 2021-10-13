@@ -43,15 +43,19 @@
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class="form-control">
                     @{
-                        IEnumerable<Category> categories = ViewData["categoryList"] as IEnumerable<Category>;
-
-                        foreach (Category category in categories)
+                        if (ViewData["categoryList"] != null)
                         {
+                            IEnumerable<Category> categories = ViewData["categoryList"] as IEnumerable<Category>;
 
-                            <option value="category.CategoryId">
-                                @category.CategoryName
-                            </option>
+                            foreach (Category category in categories)
+                            {
+
+                                <option value="@category.CategoryId">
+                                    @category.CategoryName
+                                </option>
+                            }
                         }
+
                     }
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -85,14 +89,18 @@
                 <label asp-for="ForAgesId" class="control-label"></label>
                 <select asp-for="ForAgesId" class="form-control">
                     @{
-                        IEnumerable<Age> ages = ViewData["forAgeList"] as IEnumerable<Age>;
-
-                        foreach (Age age in ages)
+                        if (ViewData["forAgeList"] != null)
                         {
-                            <option value="age.ForAgesId">
-                                @age.Description
-                            </option>
+                            IEnumerable<Age> ages = ViewData["forAgeList"] as IEnumerable<Age>;
+
+                            foreach (Age age in ages)
+                            {
+                                <option value="@age.ForAgesId">
+                                    @age.Description
+                                </option>
+                            }
                         }
+
                     }
                 </select>
                 <span asp-validation-for="ForAgesId" class="text-danger"></span>
@@ -123,4 +131,11 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@{
+    if (ViewBag.Message != null) { 
+        <script>
+            alert("@ViewBag.Message")
+        </script>
+    }
 }

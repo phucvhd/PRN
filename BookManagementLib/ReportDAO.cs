@@ -154,16 +154,12 @@ namespace BookManagementLib
 
         public int IdGenerate()
         {
-            int newid = 0;
+            int newid = 1;
             try
             {
                 using var context = new BookManagementDBContext();
                 Report report = context.Reports.ToList().OrderByDescending(r => r.Id).FirstOrDefault();
-                if (report == null)
-                {
-                    return newid++;
-                }
-                else
+                if (report != null)
                 {
                     newid = report.Id++;
                 }

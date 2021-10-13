@@ -32,6 +32,7 @@ namespace BookManagementLib
             {
                 using var context = new BookManagementDBContext();
                 Products = context.Products.ToList();
+                Products.Sort((n1, n2) => Int32.Parse(n1.ProductId.Substring(1)).CompareTo(Int32.Parse(n2.ProductId.Substring(1))));
             }
             catch (Exception ex)
             {
@@ -171,14 +172,16 @@ namespace BookManagementLib
             try
             {
                 using var context = new BookManagementDBContext();
-                Product product = context.Products.ToList().OrderByDescending(p => p.ProductId).FirstOrDefault();
+                List<Product> products = context.Products.ToList();
+                products.Sort((n1, n2) => Int32.Parse(n1.ProductId.Substring(1)).CompareTo(Int32.Parse(n2.ProductId.Substring(1))));
+                Product product = products.LastOrDefault();
                 if (product == null)
                 {
                     newid = "P1";
                 }
                 else
                 {
-                    newid = product.CategoryId.Substring(0, 1) + (Int32.Parse(product.CategoryId.Substring(1)) + 1).ToString();
+                    newid = product.ProductId.Substring(0, 1) + (Int32.Parse(product.ProductId.Substring(1)) + 1).ToString();
                 }
             }
             catch (Exception ex)

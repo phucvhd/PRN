@@ -9,7 +9,7 @@ namespace BookManagementLib.Repository
 {
     public interface ICompanyRepository
     {
-        IEnumerable<Company> GetCompanys();
+        IEnumerable<Company> GetCompanies();
         Company GetCompanyByID(string CompanyId);
         Company GetCompanyByName(string CompanyName);
         void InsertCompany(Company Company);

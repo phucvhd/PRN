@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookManagementLib.DataAccess;
 using BookManagementLib.Repository;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 
 namespace BookManagementWeb.Controllers
@@ -23,7 +24,7 @@ namespace BookManagementWeb.Controllers
 
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("UserID") != null)
+            if (TempData.Peek("userEmail") != null)
             {
                 return View();
             }
@@ -51,8 +52,8 @@ namespace BookManagementWeb.Controllers
                 bool status = userRepository.CheckLogin(user.Email, user.Password);
                 if (status)
                 {
-                    HttpContext.Session.SetString("UserID", user.Email);
-                    HttpContext.Session.SetString("UserName", user.Password);
+                    TempData["UserEmail"] = user.Email;
+                    //HttpContext.Session.SetString("userEmail",user.Email);
                     return RedirectToAction("Index");
                 }
                 
@@ -62,7 +63,7 @@ namespace BookManagementWeb.Controllers
 
         public ActionResult Logout()
         {
-            HttpContext.Session.Clear();
+            TempData["UserEmail"] = null;
             return RedirectToAction("Login");
         }
 

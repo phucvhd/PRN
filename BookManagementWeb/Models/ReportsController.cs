@@ -6,12 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookManagementLib.DataAccess;
 using BookManagementLib.Repository;
+using Newtonsoft.Json;
 
 namespace BookManReportmentWeb.Models
 {
     public class ReportsController : Controller
     {
         IReportRepository ReportRepository = null;
+        ICompanyRepository CompanyRepository = new CompanyRepository();
         public ReportsController() => ReportRepository = new ReportRepository();
         // GET: ReportsController
         public ActionResult Index()
@@ -39,6 +41,12 @@ namespace BookManReportmentWeb.Models
         public ActionResult Create()
         {
             ViewBag.newid = ReportRepository.ReportIdGenerate();
+            //object pro = TempData.Peek("product");
+            //Product product = JsonConvert.DeserializeObject((string) pro) as Product;
+            //ViewData["product"] = product;
+            ViewBag.proId = TempData.Peek("product");
+            ViewData["companyList"] = CompanyRepository.GetCompanies();
+            ViewBag.userEmail = TempData.Peek("userEmail");
             return View();
         }
 
@@ -51,9 +59,10 @@ namespace BookManReportmentWeb.Models
             {
                 if (ModelState.IsValid)
                 {
+                    Report.CreatedDate = DateTime.Now;
                     ReportRepository.InsertReport(Report);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),"Products");
             }
             catch (Exception ex)
             {

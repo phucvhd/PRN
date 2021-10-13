@@ -16,7 +16,7 @@ namespace BookManagementWeb.Models
         // GET: CompanysController
         public ActionResult Index()
         {
-            var CompanyList = CompanyRepository.GetCompanys();
+            var CompanyList = CompanyRepository.GetCompanies();
             return View(CompanyList);
         }
 
