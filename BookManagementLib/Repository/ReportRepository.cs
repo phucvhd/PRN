@@ -18,5 +18,11 @@ namespace BookManagementLib.Repository
         public void DeleteReport(int ReportId) => ReportDAO.Instance.Remove(ReportId);
         public void UpdateReport(Report Report) => ReportDAO.Instance.Update(Report);
         public int ReportIdGenerate() => ReportDAO.Instance.IdGenerate();
+
+        public IEnumerable<Report> GetReportsByCreatedDate(DateTime Date) => ReportDAO.Instance.GetReportsByCreatedDate(Date);
+
+        public IEnumerable<Report> GetReportsForDates(DateTime StartDate, DateTime EndDate) => ReportDAO.Instance.GetReportsForDates(StartDate, EndDate);
+
+        public Tuple<int, int> DashboardStatistic() => ReportDAO.Instance.DashboardStatistic();
     }
 }

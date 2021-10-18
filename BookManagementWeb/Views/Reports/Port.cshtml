@@ -2,22 +2,22 @@
 @model BookManagementLib.DataAccess.Report
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Port";
     Layout = "~/Views/Shared/_Layout.cshtml";
     //Product product = ViewData["product"] as Product;
 }
 
-<h1>Create</h1>
+<h1>Port</h1>
 
 <h4>Report</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Port">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" readonly value="@ViewBag.newid"/>
+                <input asp-for="Id" class="form-control" readonly value="@ViewBag.newid" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,38 +42,39 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control" readonly value="@ViewBag.proId"/>
+                <input asp-for="ProductId" class="form-control" readonly value="@ViewBag.proId" />
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Export(-)/Import(+)</label>
+                <input asp-for="Quantity" class="form-control" id="port" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="UserEmail" class="control-label"></label>
-                <input asp-for="UserEmail" class="form-control" readonly value="@ViewBag.userEmail"/>
+                <input asp-for="UserEmail" class="form-control" readonly value="@ViewBag.userEmail" />
                 <span asp-validation-for="UserEmail" class="text-danger"></span>
             </div>
             <!--
-            <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsSupplier" id="sup" /> @Html.DisplayNameFor(model => model.IsSupplier)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsReceiver" id="rec" /> @Html.DisplayNameFor(model => model.IsReceiver)
+                </label>
             </div>
             <div class="form-group">
                 <label asp-for="CreatedDate" class="control-label"></label>
                 <input asp-for="CreatedDate" class="form-control" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsSupplier" /> @Html.DisplayNameFor(model => model.IsSupplier)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsReceiver" /> @Html.DisplayNameFor(model => model.IsReceiver)
-                </label>
-            </div>
             -->
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Port" class="btn btn-primary" onsubmit="return validate()" />
             </div>
         </form>
     </div>
@@ -85,4 +86,25 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>W
+    function validate() {
+        var x = document.getElementById('port').value
+        if (!Number.isInteger(x)) {
+            alert('Export/Import is integer number')
+            console.log('Export/Import is integer number')
+            document.getElementById('port-message').innerHTML = "Integer only"
+            return false
+        }
+
+        return true
+    }
+</script>
+@{
+    if (ViewBag.Message != null)
+    {
+        <script>
+        window.onload = function () { alert("@ViewBag.Message") }
+        </script>
+    }
 }

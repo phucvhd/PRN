@@ -538,3 +538,4 @@ D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\BookManagementWeb.dll
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\ref\BookManagementWeb.dll
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\BookManagementWeb.pdb
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\BookManagementWeb.genruntimeconfig.cache
+D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Reports\Port.cshtml.g.cs

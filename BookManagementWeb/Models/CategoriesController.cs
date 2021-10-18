@@ -14,9 +14,32 @@ namespace BookManagementWeb.Models
         ICategoryRepository categoryRepository = null;
         public CategoriesController() => categoryRepository = new CategoryRepository();
         // GET: CategoriesController
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string notify)
         {
-            var categoriesList = categoryRepository.GetCategories();
+            ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            ViewBag.NameSortParm = sortOrder == "name_inc" ? "name_desc" : "name_inc";
+            ViewBag.Notify = notify;
+            var categoriesList = categoryRepository.GetCategories().ToList();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                categoriesList = categoriesList.Where(c => c.CategoryId.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                       || c.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            switch (sortOrder)
+            {
+                case "id_desc":
+                    categoriesList.Sort((n1, n2) => Int32.Parse(n2.CategoryId.Substring(1)).CompareTo(Int32.Parse(n1.CategoryId.Substring(1))));
+                    break;
+                case "name_desc":
+                    categoriesList.Sort((n1, n2) => n2.CategoryName.CompareTo(n1.CategoryName));
+                    break;
+                case "name_inc":
+                    categoriesList.Sort((n1, n2) => n1.CategoryName.CompareTo(n2.CategoryName));
+                    break;
+                default:
+                    categoriesList.Sort((n1, n2) => Int32.Parse(n1.CategoryId.Substring(1)).CompareTo(Int32.Parse(n2.CategoryId.Substring(1))));
+                    break;
+            }
             return View(categoriesList);
         }
 
@@ -53,7 +76,7 @@ namespace BookManagementWeb.Models
                 {
                     categoryRepository.InsertCategory(category);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Create success !" });
             }
             catch (Exception ex)
             {
@@ -88,7 +111,7 @@ namespace BookManagementWeb.Models
                 {
                     categoryRepository.UpdateCategory(category);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Update success !" });
             }
             catch (Exception ex)
             {
@@ -120,7 +143,7 @@ namespace BookManagementWeb.Models
             try
             {
                 categoryRepository.DeleteCategory(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Delete success !" });
             }
             catch (Exception ex)
             {

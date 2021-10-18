@@ -26,7 +26,7 @@ namespace BookManagementWeb.Controllers
         {
             if (TempData.Peek("userEmail") != null)
             {
-                return View();
+                return RedirectToAction(nameof(Index), "Reports");
             }
             else
             {
@@ -56,8 +56,13 @@ namespace BookManagementWeb.Controllers
                     //HttpContext.Session.SetString("userEmail",user.Email);
                     return RedirectToAction("Index");
                 }
-                
+                else
+                {
+                    ViewBag.Notify = "Wrong Email or Password";
+                    return View();
+                }
             }
+            ViewBag.Notify = "Login Fail !!!";
             return View();
         }
 

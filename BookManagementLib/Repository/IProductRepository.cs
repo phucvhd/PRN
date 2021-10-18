@@ -16,5 +16,6 @@ namespace BookManagementLib.Repository
         void DeleteProduct(string ProductsId);
         void UpdateProduct(Product Product);
         string ProductIdGenerate();
+        bool CheckISBN(string ISBN);
     }
 }

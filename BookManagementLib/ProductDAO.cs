@@ -172,9 +172,8 @@ namespace BookManagementLib
             try
             {
                 using var context = new BookManagementDBContext();
-                List<Product> products = context.Products.ToList();
-                products.Sort((n1, n2) => Int32.Parse(n1.ProductId.Substring(1)).CompareTo(Int32.Parse(n2.ProductId.Substring(1))));
-                Product product = products.LastOrDefault();
+                
+                Product product = GetProductList().LastOrDefault();
                 if (product == null)
                 {
                     newid = "P1";
@@ -189,6 +188,17 @@ namespace BookManagementLib
                 throw new Exception(ex.Message);
             }
             return newid;
+        }
+
+        public bool checkISBN(string isbn)
+        {
+            var products = GetProductList();
+            products.Where(p => p.Isbn10.Equals(isbn) || p.Isbn13.Equals(isbn)).ToList();
+            if (products.Count() == 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

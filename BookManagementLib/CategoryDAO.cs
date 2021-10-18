@@ -27,17 +27,18 @@ namespace BookManagementLib
         }
         public IEnumerable<Category> GetCategoryList()
         {
-            var Categorys = new List<Category>();
+            var Categories = new List<Category>();
             try
             {
                 using var context = new BookManagementDBContext();
-                Categorys = context.Categories.ToList();
+                Categories = context.Categories.ToList();
+                Categories.Sort((n1, n2) => Int32.Parse(n1.CategoryId.Substring(1)).CompareTo(Int32.Parse(n2.CategoryId.Substring(1))));
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return Categorys;
+            return Categories;
         }
 
         public Category GetCategoryByID(string CategoryID)
@@ -142,7 +143,7 @@ namespace BookManagementLib
             try
             {
                 using var context = new BookManagementDBContext();
-                Category category = context.Categories.ToList().OrderByDescending(c => c.CategoryId).FirstOrDefault();
+                Category category = GetCategoryList().LastOrDefault();
                 if (category == null)
                 {
                     newid = "C1";

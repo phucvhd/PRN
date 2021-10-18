@@ -19,9 +19,34 @@ namespace BookManagementWeb.Models
 
         public ProductsController() => productRepository = new ProductRepository();
         // GET: ProductsController
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string notify)
         {
-            var productList = productRepository.GetProducts();
+            ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            ViewBag.NameSortParm = sortOrder == "name_inc" ? "name_desc" : "name_inc";
+            ViewBag.Notify = notify;
+            var productList = productRepository.GetProducts().ToList();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                productList = productList.Where(p => p.ProductId.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                       || p.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                       || p.Isbn10.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                       || p.Isbn13.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            switch (sortOrder)
+            {
+                case "id_desc":
+                    productList.Sort((n1, n2) => Int32.Parse(n2.ProductId.Substring(1)).CompareTo(Int32.Parse(n1.ProductId.Substring(1))));
+                    break;
+                case "name_desc":
+                    productList.Sort((n1, n2) => n2.ProductName.CompareTo(n1.ProductName));
+                    break;
+                case "name_inc":
+                    productList.Sort((n1, n2) => n1.ProductName.CompareTo(n2.ProductName));
+                    break;
+                default:
+                    productList.Sort((n1, n2) => Int32.Parse(n1.ProductId.Substring(1)).CompareTo(Int32.Parse(n2.ProductId.Substring(1))));
+                    break;
+            }
             return View(productList);
         }
 
@@ -59,6 +84,13 @@ namespace BookManagementWeb.Models
                 ViewData["forAgeList"] = ageRepository.GetAges();
                 ViewData["categoryList"] = categoryRepository.GetCategories();
                 ViewBag.newid = productRepository.ProductIdGenerate();
+
+                if (!productRepository.CheckISBN(product.Isbn10) || !productRepository.CheckISBN(product.Isbn13))
+                {
+                    ViewBag.Message = "ISBN available";
+                    return View(product);
+                }
+
                 if (ModelState.IsValid)
                 {
                     product.CreatedDate = DateTime.Now;
@@ -108,10 +140,10 @@ namespace BookManagementWeb.Models
                 }
                 if (ModelState.IsValid)
                 {
-                    product.LastModified = DateTime.Now;
+                    //product.LastModified = DateTime.Now;
                     productRepository.UpdateProduct(product);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Update success !" });
             }
             catch (Exception ex)
             {
@@ -143,7 +175,7 @@ namespace BookManagementWeb.Models
             try
             {
                 productRepository.DeleteProduct(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Delete success !" });
             }
             catch (Exception ex)
             {

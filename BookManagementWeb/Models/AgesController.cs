@@ -72,7 +72,7 @@ namespace BookManagementWeb.Models
                 {
                     AgeRepository.InsertAge(Age);
                 }
-                return RedirectToAction(nameof(Index),new { notify = "Create success !" });
+                return RedirectToAction(nameof(Index), new { notify = "Create success !" });
             }
             catch (Exception ex)
             {

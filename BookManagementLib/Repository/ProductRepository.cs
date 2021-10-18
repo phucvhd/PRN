@@ -17,5 +17,7 @@ namespace BookManagementLib.Repository
         public void UpdateProduct(Product Product) => ProductDAO.Instance.Update(Product);
 
         public string ProductIdGenerate() => ProductDAO.Instance.IdGenerate();
+
+        public bool CheckISBN(string ISBN) => ProductDAO.Instance.checkISBN(ISBN);
     }
 }

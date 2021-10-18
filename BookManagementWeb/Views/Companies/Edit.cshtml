@@ -37,3 +37,11 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+@{
+    if (ViewBag.Message != null)
+    {
+        <script>
+        window.onload = function () { alert("@ViewBag.Message") }
+        </script>
+    }
+}

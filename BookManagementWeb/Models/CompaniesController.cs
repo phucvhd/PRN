@@ -14,9 +14,41 @@ namespace BookManagementWeb.Models
         ICompanyRepository CompanyRepository = null;
         public CompaniesController() => CompanyRepository = new CompanyRepository();
         // GET: CompanysController
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string notify)
         {
-            var CompanyList = CompanyRepository.GetCompanies();
+            ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            ViewBag.NameSortParm = sortOrder == "name_inc" ? "name_desc" : "name_inc";
+            ViewBag.EmailSortParm = sortOrder == "email_inc" ? "email_desc" : "email_inc";
+            ViewBag.Notify = notify;
+            var CompanyList = CompanyRepository.GetCompanies().ToList();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                CompanyList = CompanyList.Where(cm => cm.CompanyId.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                       || cm.CompanyName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                       || cm.CompanyEmail.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                       || cm.CompanyPhone.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            switch (sortOrder)
+            {
+                case "id_desc":
+                    CompanyList.Sort((n1, n2) => Int32.Parse(n2.CompanyId.Substring(2)).CompareTo(Int32.Parse(n1.CompanyId.Substring(2))));
+                    break;
+                case "name_desc":
+                    CompanyList.Sort((n1, n2) => n2.CompanyName.CompareTo(n1.CompanyName));
+                    break;
+                case "name_inc":
+                    CompanyList.Sort((n1, n2) => n1.CompanyName.CompareTo(n2.CompanyName));
+                    break;
+                case "email_desc":
+                    CompanyList.Sort((n1, n2) => n2.CompanyEmail.CompareTo(n1.CompanyEmail));
+                    break;
+                case "email_inc":
+                    CompanyList.Sort((n1, n2) => n1.CompanyEmail.CompareTo(n2.CompanyEmail));
+                    break;
+                default:
+                    CompanyList.Sort((n1, n2) => Int32.Parse(n1.CompanyId.Substring(2)).CompareTo(Int32.Parse(n2.CompanyId.Substring(2))));
+                    break;
+            }
             return View(CompanyList);
         }
 
@@ -53,7 +85,7 @@ namespace BookManagementWeb.Models
                 {
                     CompanyRepository.InsertCompany(Company);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Create success !" });
             }
             catch (Exception ex)
             {
@@ -88,7 +120,7 @@ namespace BookManagementWeb.Models
                 {
                     CompanyRepository.UpdateCompany(Company);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Update success !" });
             }
             catch (Exception ex)
             {
@@ -123,7 +155,7 @@ namespace BookManagementWeb.Models
                 {
                     CompanyRepository.DeleteCompany(id);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = "Delete success !" });
             }
             catch (Exception ex)
             {

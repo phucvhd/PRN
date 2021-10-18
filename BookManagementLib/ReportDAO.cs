@@ -161,7 +161,7 @@ namespace BookManagementLib
                 Report report = context.Reports.ToList().OrderByDescending(r => r.Id).FirstOrDefault();
                 if (report != null)
                 {
-                    newid = report.Id++;
+                    newid = ++report.Id;
                 }
             }
             catch (Exception ex)
@@ -169,6 +169,67 @@ namespace BookManagementLib
                 throw new Exception(ex.Message);
             }
             return newid;
+        }
+
+        public IEnumerable<Report> GetReportsByCreatedDate(DateTime Date)
+        {
+            var Reports = new List<Report>();
+            try
+            {
+                Reports = GetReportList().Where(r => r.CreatedDate.Year == Date.Year
+                                                      && r.CreatedDate.Month == Date.Month && r.CreatedDate.Date == Date.Date).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return Reports;
+        }
+        public IEnumerable<Report> GetReportsForDates(DateTime StartDate, DateTime EndDate)
+        {
+            var Reports = new List<Report>();
+            
+            try
+            {
+                var reports = GetReportList();
+                foreach (DateTime day in EachDay(StartDate, EndDate))
+                {
+
+                    List<Report> ReportList = reports.Where(r => r.CreatedDate.Year == day.Year
+                                                          && r.CreatedDate.Month == day.Month && r.CreatedDate.Date == day.Date).ToList();
+                    Reports.Concat(ReportList);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return Reports;
+        }
+        public Tuple<int, int> DashboardStatistic()
+        {
+            var reports = GetReportList().Where(r=> r.CreatedDate.Month == DateTime.Now.Month && r.CreatedDate.Year == DateTime.Now.Year);
+            int increase = 0;
+            int decrease = 0;
+            foreach (Report report in reports)
+            {
+                if (report.IsReceiver)
+                {
+                    decrease += Math.Abs(report.Quantity);
+                }
+                if (report.IsSupplier)
+                {
+                    increase += report.Quantity;
+                }
+            }
+            return new Tuple<int, int>(increase, decrease);
+        }
+        private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
+                yield return day;
         }
     }
 }

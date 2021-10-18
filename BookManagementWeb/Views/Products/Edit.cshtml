@@ -5,18 +5,26 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    IEnumerable<Category> categories = ViewData["categoryList"] as IEnumerable<Category>;
+    IEnumerable<Age> ages = ViewData["forAgeList"] as IEnumerable<Age>;
 
+}
 <h1>Edit</h1>
 
 <h4>Product</h4>
 <hr />
+<div>
+    
+    @Html.ActionLink("Export / Import", "Port", "Reports", new { productId = Model.ProductId }) 
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control" />
+                <input asp-for="ProductId" class="form-control" readonly />
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,18 +49,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control">
-                    @{
-                        IEnumerable<Category> categories = ViewData["categoryList"] as IEnumerable<Category>;
-
-                        foreach (Category category in categories)
-                        {
-
-                            <option value="category.CategoryId">
-                                @category.CategoryName
-                            </option>
-                        }
-                    }
+                <select asp-for="CategoryId" asp-items="@(new SelectList(categories,"CategoryId","CategoryName", Model.CategoryId))" class="form-control">
+                    
+                    <option>--- Select one ---</option>
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
@@ -63,9 +62,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
+                <input asp-for="Quantity" class="form-control" readonly />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Author" class="control-label"></label>
                 <input asp-for="Author" class="form-control" />
@@ -83,24 +83,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="ForAgesId" class="control-label"></label>
-                <select asp-for="ForAgesId" class="form-control">
-                    @{
-                        IEnumerable<Age> ages = ViewData["forAgeList"] as IEnumerable<Age>;
-
-                        foreach (Age age in ages)
-                        {
-                            <option value="age.ForAgesId">
-                                @age.Description
-                            </option>
-                        }
-                    }
+                <select asp-for="ForAgesId" asp-items="@(new SelectList(ages,"ForAgesId","Description", Model.ForAgesId))" class="form-control">
+                    <option>--- Select one ---</option>
                 </select>
                 <span asp-validation-for="ForAgesId" class="text-danger"></span>
             </div>
-            <!--
             <div class="form-group">
                 <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
+                <input asp-for="CreatedDate" class="form-control" readonly />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -108,10 +98,11 @@
                 <input asp-for="LastModified" class="form-control" />
                 <span asp-validation-for="LastModified" class="text-danger"></span>
             </div>
-                
+            <!--
+
             -->
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" onsubmit="return validate()" />
             </div>
         </form>
     </div>
@@ -124,3 +115,24 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+@{
+    if (ViewBag.Message != null)
+    {
+        <script>
+        window.onload = function () { alert("@ViewBag.Message") }
+        </script>
+    }
+}
+<script>
+    function validate() {
+        var x = document.getElementById('port').value
+        if (!Number.isInteger(x)) {
+            alert('Export/Import is integer number')
+            console.log('Export/Import is integer number')
+            document.getElementById('port-message').innerHTML = "Integer only"
+            return false
+        }
+        @ViewBag.Port=x
+        return true
+    }
+</script>

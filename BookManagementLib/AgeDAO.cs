@@ -32,6 +32,7 @@ namespace BookManagementLib
             {
                 using var context = new BookManagementDBContext();
                 Ages = context.Ages.ToList();
+                Ages.Sort((n1, n2) => Int32.Parse(n1.ForAgesId.Substring(1)).CompareTo(Int32.Parse(n2.ForAgesId.Substring(1))));
             }
             catch (Exception ex)
             {
@@ -128,7 +129,7 @@ namespace BookManagementLib
             try
             {
                 using var context = new BookManagementDBContext();
-                Age age = context.Ages.ToList().OrderByDescending(a=>a.ForAgesId).FirstOrDefault();
+                Age age = GetAgeList().LastOrDefault();
                 if (age == null)
                 {
                     newid = "A1";

@@ -17,5 +17,9 @@ namespace BookManagementLib.Repository
         void DeleteReport(int ReportID);
         void UpdateReport(Report Report);
         int ReportIdGenerate();
+        IEnumerable<Report> GetReportsByCreatedDate(DateTime Date);
+        IEnumerable<Report> GetReportsForDates(DateTime StartDate, DateTime EndDate);
+        Tuple<int, int> DashboardStatistic();
+
     }
 }

@@ -27,17 +27,18 @@ namespace BookManagementLib
         }
         public IEnumerable<Company> GetCompanyList()
         {
-            var Companys = new List<Company>();
+            var Companies = new List<Company>();
             try
             {
                 using var context = new BookManagementDBContext();
-                Companys = context.Companies.ToList();
+                Companies = context.Companies.ToList();
+                Companies.Sort((n1, n2) => Int32.Parse(n1.CompanyId.Substring(2)).CompareTo(Int32.Parse(n2.CompanyId.Substring(2))));
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return Companys;
+            return Companies;
         }
 
         public Company GetCompanyByID(string CompanyID)
@@ -142,7 +143,7 @@ namespace BookManagementLib
             try
             {
                 using var context = new BookManagementDBContext();
-                Company company = context.Companies.ToList().OrderByDescending(c => c.CompanyId).FirstOrDefault();
+                Company company = GetCompanyList().LastOrDefault();
                 if (company == null)
                 {
                     newid = "CM1";
