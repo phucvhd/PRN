@@ -19,8 +19,9 @@ namespace BookManagementWeb.Models
 
         public ProductsController() => productRepository = new ProductRepository();
         // GET: ProductsController
-        public ActionResult Index(string sortOrder, string searchString, string notify)
+        public ActionResult Index(string sortOrder, string searchString, string notify, int? pageNumber)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.NameSortParm = sortOrder == "name_inc" ? "name_desc" : "name_inc";
             ViewBag.Notify = notify;
@@ -47,7 +48,18 @@ namespace BookManagementWeb.Models
                     productList.Sort((n1, n2) => Int32.Parse(n1.ProductId.Substring(1)).CompareTo(Int32.Parse(n2.ProductId.Substring(1))));
                     break;
             }
-            
+
+            //Paging
+            var pageIndex = pageNumber ?? 0;
+            if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
+            if ((pageIndex * 10 + 10) <= productList.Count()) productList = productList.GetRange(pageIndex * 10, 10);
+            else {
+                ViewBag.NextDisabled = "disabled";
+                productList = productList.GetRange((pageIndex) * 10, productList.Count() - (pageIndex) * 10);
+            }
+            ViewBag.PageIndex = pageIndex;
+
+
             ViewBag.Stock = productRepository.GetStock();
             return View(productList);
         }

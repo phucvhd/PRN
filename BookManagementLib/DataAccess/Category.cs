@@ -14,7 +14,7 @@ namespace BookManagementLib.DataAccess
         }
         [Required(AllowEmptyStrings = false)]
         public string CategoryId { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter the Name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter the Category Name")]
         [StringLength(maximumLength: 50, MinimumLength = 2, ErrorMessage = "Length must be between 2 to 50")]
         public string CategoryName { get; set; }
 

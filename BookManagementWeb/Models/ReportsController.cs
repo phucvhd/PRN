@@ -206,8 +206,7 @@ namespace BookManReportmentWeb.Models
         public ActionResult Port(Report Report)
         {
             try
-            {
-                
+            {                
                 if (ModelState.IsValid)
                 {
                     Report.CreatedDate = DateTime.Now;
@@ -238,8 +237,9 @@ namespace BookManReportmentWeb.Models
                         productRepository.UpdateProduct(product);
                     }
                     ReportRepository.InsertReport(Report);
+                    return RedirectToAction(nameof(Index), "Products", new { notify = "Export/Import success!"});
                 }
-                return RedirectToAction(nameof(Index), "Products", new { notify = "Export/Import success!"});
+                return RedirectToAction(nameof(Index), "Products", new { notify = "Export/Import Fail! /n " });
             }
             catch (Exception ex)
             {
