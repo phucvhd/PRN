@@ -207,11 +207,17 @@ namespace BookManReportmentWeb.Models
         {
             try
             {
+                
                 if (ModelState.IsValid)
                 {
                     Report.CreatedDate = DateTime.Now;
                     Company company = CompanyRepository.GetCompanyByID(Report.CompanyId);
                     Product product = productRepository.GetProductByID(Report.ProductId);
+
+                    if (Report.Quantity == 0)
+                    {
+                        return RedirectToAction(nameof(Port), new { productId = product.ProductId, message = "Quantity must be Integer excluding 0 !!!" });
+                    }
 
                     if (Report.Quantity < 0) Report.IsReceiver = true;
                     if (Report.Quantity > 0) Report.IsSupplier = true;

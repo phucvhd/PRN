@@ -21,6 +21,11 @@
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                <input asp-for="ProductId" class="form-control" readonly value="@ViewBag.proId" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CompanyId" class="control-label"></label>
                 <select asp-for="CompanyId" class="form-control">
                     @{
@@ -41,16 +46,10 @@
                 <span asp-validation-for="CompanyId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control" readonly value="@ViewBag.proId" />
-                <span asp-validation-for="ProductId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label class="control-label">Export(-)/Import(+)</label>
-                <input asp-for="Quantity" class="form-control" id="port" />
+                <input asp-for="Quantity" class="form-control" id="port"/>
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="UserEmail" class="control-label"></label>
                 <input asp-for="UserEmail" class="form-control" readonly value="@ViewBag.userEmail" />
@@ -87,17 +86,16 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<script>W
+<script>
     function validate() {
-        var x = document.getElementById('port').value
+        let x = document.getElementById('port').value
         if (!Number.isInteger(x)) {
-            alert('Export/Import is integer number')
+            alert('Export/Import must be integer number and not equal 0')
             console.log('Export/Import is integer number')
             document.getElementById('port-message').innerHTML = "Integer only"
             return false
         }
 
-        return true
     }
 </script>
 @{

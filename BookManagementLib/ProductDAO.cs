@@ -200,5 +200,16 @@ namespace BookManagementLib
             }
             return false;
         }
+
+        public int GetStock()
+        {
+            int stock = 0;
+            var products = GetProductList();
+            foreach(Product product in products)
+            {
+                stock += product.Quantity;
+            }
+            return stock;
+        }
     }
 }

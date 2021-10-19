@@ -47,6 +47,8 @@ namespace BookManagementWeb.Models
                     productList.Sort((n1, n2) => Int32.Parse(n1.ProductId.Substring(1)).CompareTo(Int32.Parse(n2.ProductId.Substring(1))));
                     break;
             }
+            
+            ViewBag.Stock = productRepository.GetStock();
             return View(productList);
         }
 

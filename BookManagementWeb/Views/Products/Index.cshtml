@@ -17,6 +17,7 @@
         <input type="submit" value="Search" />
     </p>
 }
+<p class="text-info">Stock: @ViewBag.Stock</p>
 <table class="table">
     <thead>
         <tr>
@@ -41,15 +42,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.ForAgesId)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
             <!--
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Author)
@@ -94,15 +95,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ForAgesId)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
                 <!--
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Author)

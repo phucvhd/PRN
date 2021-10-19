@@ -17,5 +17,6 @@ namespace BookManagementLib.Repository
         void UpdateProduct(Product Product);
         string ProductIdGenerate();
         bool CheckISBN(string ISBN);
+        int GetStock();
     }
 }
