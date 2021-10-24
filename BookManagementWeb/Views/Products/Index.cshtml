@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<BookManagementLib.DataAccess.Product>
+@using BookManagementLib.DataAccess;
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var categories = ViewData["categories"] as List<Category>;
 }
 
 <h1>Index</h1>
@@ -16,6 +18,13 @@
         Search by Id, Name, ISBN: @Html.TextBox("SearchString")
         <input type="submit" value="Search" />
     </p>
+}
+@using (Html.BeginForm())
+{
+<p>
+    Category: @Html.DropDownList("CategoryID", new SelectList(categories, "CategoryId", "CategoryName", ViewBag.CategoryID), "Select Category")
+    <input type="submit" value="Filter" />
+</p>
 }
 <p class="text-info">Stock: @ViewBag.Stock</p>
 <table class="table">
