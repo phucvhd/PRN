@@ -14,7 +14,7 @@ namespace BookManagementWeb.Models
         ICompanyRepository CompanyRepository = null;
         public CompaniesController() => CompanyRepository = new CompanyRepository();
         // GET: CompanysController
-        public ActionResult Index(string sortOrder, string searchString, string notify)
+        public ActionResult Index(string sortOrder, string searchString, string notify, int? pageNumber)
         {
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.NameSortParm = sortOrder == "name_inc" ? "name_desc" : "name_inc";
@@ -49,6 +49,19 @@ namespace BookManagementWeb.Models
                     CompanyList.Sort((n1, n2) => Int32.Parse(n1.CompanyId.Substring(2)).CompareTo(Int32.Parse(n2.CompanyId.Substring(2))));
                     break;
             }
+
+            //Paging
+            var pageIndex = pageNumber ?? 0;
+            if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
+            if ((pageIndex * 10 + 10) <= CompanyList.Count()) CompanyList = CompanyList.GetRange(pageIndex * 10, 10);
+            else
+            {
+                ViewBag.NextDisabled = "disabled";
+                CompanyList = CompanyList.GetRange((pageIndex) * 10, CompanyList.Count() - (pageIndex) * 10);
+            }
+            ViewBag.PageIndex = pageIndex;
+
+
             return View(CompanyList);
         }
 

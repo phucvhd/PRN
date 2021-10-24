@@ -14,7 +14,7 @@ namespace BookManagementWeb.Models
         IAgeRepository AgeRepository = null;
         public AgesController() => AgeRepository = new AgeRepository();
         // GET: AgesController
-        public ActionResult Index(string sortOrder, string searchString, string notify)
+        public ActionResult Index(string sortOrder, string searchString, string notify, int? pageNumber)
         {
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.Notify = notify;
@@ -34,6 +34,17 @@ namespace BookManagementWeb.Models
                     AgesList = AgesList.OrderBy(a => a.ForAgesId);
                     break;
             }
+
+            //Paging
+            var pageIndex = pageNumber ?? 0;
+            if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
+            if ((pageIndex * 10 + 10) <= AgesList.Count()) AgesList = AgesList.ToList().GetRange(pageIndex * 10, 10);
+            else
+            {
+                ViewBag.NextDisabled = "disabled";
+                AgesList = AgesList.ToList().GetRange((pageIndex) * 10, AgesList.Count() - (pageIndex) * 10);
+            }
+            ViewBag.PageIndex = pageIndex;
 
             return View(AgesList);
         }

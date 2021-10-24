@@ -25,7 +25,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Password)
             </th>
-            <th></th>
+            
         </tr>
     </thead>
     <tbody>
@@ -43,11 +43,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Email }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Email }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Email })
-            </td>
+            
         </tr>
 }
     </tbody>

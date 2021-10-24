@@ -17,7 +17,7 @@ namespace BookManReportmentWeb.Models
         IProductRepository productRepository = new ProductRepository();
         public ReportsController() => ReportRepository = new ReportRepository();
         // GET: ReportsController
-        public ActionResult Index(string sortOrder, string searchString, string notify, DateTime datetime)
+        public ActionResult Index(string sortOrder, string searchString, string notify, DateTime datetime, int? pageNumber)
         {
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.PidSortParm = sortOrder == "pid_inc" ? "pid_desc" : "pid_inc";
@@ -59,8 +59,18 @@ namespace BookManReportmentWeb.Models
                 var filterdReports = ReportRepository.GetReportsByCreatedDate(datetime);
                 ReportsList = filterdReports.ToList();
             }
-            
             ViewData["DashboardStatistic"] = ReportRepository.DashboardStatistic();
+
+            //Paging
+            var pageIndex = pageNumber ?? 0;
+            if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
+            if ((pageIndex * 10 + 10) <= ReportsList.Count()) ReportsList = ReportsList.GetRange(pageIndex * 10, 10);
+            else
+            {
+                ViewBag.NextDisabled = "disabled";
+                ReportsList = ReportsList.GetRange((pageIndex) * 10, ReportsList.Count() - (pageIndex) * 10);
+            }
+            ViewBag.PageIndex = pageIndex;
 
             return View(ReportsList);
         }
