@@ -109,7 +109,7 @@ namespace BookManagementWeb.Models
                 ViewData["categoryList"] = categoryRepository.GetCategories();
                 ViewBag.newid = productRepository.ProductIdGenerate();
 
-                if (!productRepository.CheckISBN(product.Isbn10) || !productRepository.CheckISBN(product.Isbn13))
+                if (productRepository.CheckISBN(product.Isbn10) || productRepository.CheckISBN(product.Isbn13))
                 {
                     ViewBag.Message = "ISBN available";
                     return View(product);
@@ -120,7 +120,7 @@ namespace BookManagementWeb.Models
                     product.CreatedDate = DateTime.Now;
                     product.LastModified = DateTime.Now;
                     productRepository.InsertProduct(product);
-                    TempData["product"] = product.ProductId;
+                    TempData["product"] = JsonConvert.SerializeObject(product);
                 }
                 return RedirectToAction(nameof(Create),"Reports");
             }

@@ -97,7 +97,8 @@ namespace BookManReportmentWeb.Models
             //object pro = TempData.Peek("product");
             //Product product = JsonConvert.DeserializeObject((string) pro) as Product;
             //ViewData["product"] = product;
-            ViewBag.proId = TempData.Peek("product");
+            Product product = JsonConvert.DeserializeObject<Product>((String)TempData.Peek("product"));
+            ViewBag.proId = product.ProductId;
             ViewData["companyList"] = CompanyRepository.GetCompanies();
             ViewBag.userEmail = TempData.Peek("userEmail");
             return View();
@@ -114,11 +115,13 @@ namespace BookManReportmentWeb.Models
                 {
                     Report.CreatedDate = DateTime.Now;
                     Company company = CompanyRepository.GetCompanyByID(Report.CompanyId);
-                    Product product = productRepository.GetProductByID(Report.ProductId);
+                    Product product = JsonConvert.DeserializeObject<Product>((String)TempData.Peek("product"));
+                    
                     Report.Quantity = product.Quantity;
                     Report.IsReceiver = company.IsReceiver;
                     Report.IsSupplier = company.IsSupplier;
                     ReportRepository.InsertReport(Report);
+                    //productRepository.InsertProduct(product);
                 }
                 return RedirectToAction(nameof(Index),"Products");
             }

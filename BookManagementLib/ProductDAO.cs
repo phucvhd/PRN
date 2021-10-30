@@ -193,12 +193,11 @@ namespace BookManagementLib
         public bool checkISBN(string isbn)
         {
             var products = GetProductList();
-            products.Where(p => p.Isbn10.Equals(isbn) || p.Isbn13.Equals(isbn)).ToList();
-            if (products.Count() == 0)
+            if (products.ToList().Exists(p => p.Isbn10.Equals(isbn) || p.Isbn13.Equals(isbn)))
             {
                 return true;
             }
-            return false;
+            else return false;
         }
 
         public int GetStock()
