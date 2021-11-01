@@ -52,7 +52,7 @@ namespace BookManagementWeb.Controllers
                 bool status = userRepository.CheckLogin(user.Email, user.Password);
                 if (status)
                 {
-                    TempData["UserEmail"] = user.Email;
+                    TempData["userEmail"] = user.Email;
                     //HttpContext.Session.SetString("userEmail",user.Email);
                     return RedirectToAction("Index");
                 }
@@ -68,7 +68,7 @@ namespace BookManagementWeb.Controllers
 
         public ActionResult Logout()
         {
-            TempData["UserEmail"] = null;
+            TempData.Remove("userEmail");
             return RedirectToAction("Login");
         }
 

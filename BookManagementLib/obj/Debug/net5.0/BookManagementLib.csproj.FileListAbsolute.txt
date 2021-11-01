@@ -42,3 +42,4 @@ C:\Users\Steve\Downloads\PRN-main\PRN-main\BookManagementLib\obj\Debug\net5.0\Bo
 C:\Users\Steve\Downloads\PRN-main\PRN-main\BookManagementLib\obj\Debug\net5.0\ref\BookManagementLib.dll
 C:\Users\Steve\Downloads\PRN-main\PRN-main\BookManagementLib\obj\Debug\net5.0\BookManagementLib.pdb
 C:\Users\Steve\Downloads\PRN-main\PRN-main\BookManagementLib\obj\Debug\net5.0\BookManagementLib.genruntimeconfig.cache
+D:\VS.NET\PRN_asm\BookManagementLib\obj\Debug\net5.0\BookManagementLib.csprojAssemblyReference.cache

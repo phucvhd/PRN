@@ -24,7 +24,8 @@ namespace BookManagementLib.DataAccess
         [StringLength(maximumLength: 500, MinimumLength = 2, ErrorMessage = "Length must be between 2 to 500")]
         public string CompanyAddress { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter the Company Phone")]
-        [StringLength(maximumLength: 12, ErrorMessage = "Length must be below 12")]
+        //[StringLength(maximumLength: 12, ErrorMessage = "Length must be below 12")]
+        [Phone]
         public string CompanyPhone { get; set; }
         public bool IsSupplier { get; set; }
         public bool IsReceiver { get; set; }

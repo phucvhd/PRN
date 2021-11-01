@@ -19,6 +19,9 @@ namespace BookManReportmentWeb.Models
         // GET: ReportsController
         public ActionResult Index(string sortOrder, string searchString, string notify, DateTime datetime, int? pageNumber)
         {
+            //authentication
+            if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.PidSortParm = sortOrder == "pid_inc" ? "pid_desc" : "pid_inc";
             ViewBag.CidSortParm = sortOrder == "cid_inc" ? "cid_desc" : "cid_inc";
@@ -64,7 +67,7 @@ namespace BookManReportmentWeb.Models
             //Paging
             var pageIndex = pageNumber ?? 0;
             if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
-            if ((pageIndex * 10 + 10) <= ReportsList.Count()) ReportsList = ReportsList.GetRange(pageIndex * 10, 10);
+            if ((pageIndex * 10 + 10) < ReportsList.Count()) ReportsList = ReportsList.GetRange(pageIndex * 10, 10);
             else
             {
                 ViewBag.NextDisabled = "disabled";

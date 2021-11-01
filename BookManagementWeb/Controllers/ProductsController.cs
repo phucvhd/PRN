@@ -8,6 +8,7 @@ using BookManagementLib.DataAccess;
 using BookManagementLib.Repository;
 using System.Dynamic;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BookManagementWeb.Models
 {
@@ -17,10 +18,22 @@ namespace BookManagementWeb.Models
         IAgeRepository ageRepository = new AgeRepository();
         ICategoryRepository categoryRepository = new CategoryRepository();
 
-        public ProductsController() => productRepository = new ProductRepository();
+        //public ProductsController() => productRepository = new ProductRepository();
+        private readonly IWebHostEnvironment _appEnvironment;
+
+        public ProductsController(IWebHostEnvironment appEnvironment)
+        {
+            _appEnvironment = appEnvironment;
+            productRepository = new ProductRepository();
+        }
+
+
         // GET: ProductsController
         public ActionResult Index(string sortOrder, string searchString, string notify, int? pageNumber, string? CategoryID)
         {
+            //authentication
+            if (TempData.Peek("userEmail")==null) return RedirectToAction("Login", "Home");
+
             ViewBag.CurrentSort = sortOrder;
             ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.NameSortParm = sortOrder == "name_inc" ? "name_desc" : "name_inc";
@@ -62,7 +75,7 @@ namespace BookManagementWeb.Models
             //Paging
             var pageIndex = pageNumber ?? 0;
             if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
-            if ((pageIndex * 10 + 10) <= productList.Count()) productList = productList.GetRange(pageIndex * 10, 10);
+            if ((pageIndex * 10 + 10) < productList.Count()) productList = productList.GetRange(pageIndex * 10, 10);
             else {
                 ViewBag.NextDisabled = "disabled";
                 productList = productList.GetRange((pageIndex) * 10, productList.Count() - (pageIndex) * 10);
@@ -119,6 +132,7 @@ namespace BookManagementWeb.Models
                 {
                     product.CreatedDate = DateTime.Now;
                     product.LastModified = DateTime.Now;
+                    product.Image = "/assest/"+ product.Image;
                     productRepository.InsertProduct(product);
                     TempData["product"] = JsonConvert.SerializeObject(product);
                 }

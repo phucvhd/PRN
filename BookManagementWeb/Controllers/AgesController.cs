@@ -38,7 +38,7 @@ namespace BookManagementWeb.Models
             //Paging
             var pageIndex = pageNumber ?? 0;
             if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
-            if ((pageIndex * 10 + 10) <= AgesList.Count()) AgesList = AgesList.ToList().GetRange(pageIndex * 10, 10);
+            if ((pageIndex * 10 + 10) < AgesList.Count()) AgesList = AgesList.ToList().GetRange(pageIndex * 10, 10);
             else
             {
                 ViewBag.NextDisabled = "disabled";
