@@ -502,9 +502,6 @@ D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Categories\Deta
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Categories\Edit.cshtml.g.cs
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Categories\Index.cshtml.g.cs
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Companies\Create.cshtml.g.cs
-D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Companies\Delete.cshtml.g.cs
-D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Companies\Details.cshtml.g.cs
-D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Companies\Edit.cshtml.g.cs
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Companies\Index.cshtml.g.cs
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Home\Login.cshtml.g.cs
@@ -720,3 +717,6 @@ C:\Users\Steve\Downloads\PRN-main\PRN-main\BookManagementWeb\obj\Debug\net5.0\Bo
 C:\Users\Steve\Downloads\PRN-main\PRN-main\BookManagementWeb\obj\Debug\net5.0\ref\BookManagementWeb.dll
 C:\Users\Steve\Downloads\PRN-main\PRN-main\BookManagementWeb\obj\Debug\net5.0\BookManagementWeb.pdb
 C:\Users\Steve\Downloads\PRN-main\PRN-main\BookManagementWeb\obj\Debug\net5.0\BookManagementWeb.genruntimeconfig.cache
+D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Companies\Edit.cshtml.g.cs
+D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Companies\Details.cshtml.g.cs
+D:\VS.NET\PRN_asm\BookManagementWeb\obj\Debug\net5.0\Razor\Views\Companies\Delete.cshtml.g.cs
