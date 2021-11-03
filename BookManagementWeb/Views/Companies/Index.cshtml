@@ -96,7 +96,10 @@
     if (ViewBag.Notify != null)
     {
         <script>
-        window.onload = function () { alert("@ViewBag.Notify") }
+            window.onload = function () {
+                alert("@ViewBag.Notify")
+                @ViewBag.Notify = ""
+            }
         </script>
     }
 }

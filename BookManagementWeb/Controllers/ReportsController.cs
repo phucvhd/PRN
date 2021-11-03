@@ -29,6 +29,7 @@ namespace BookManReportmentWeb.Models
             var ReportsList = ReportRepository.GetReports().ToList();
             if (!String.IsNullOrEmpty(searchString))
             {
+                ViewBag.Notify = null;
                 ReportsList = ReportsList.Where(r => r.Id.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                        || r.ProductId.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                        || r.CompanyId.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -50,7 +51,6 @@ namespace BookManReportmentWeb.Models
                 case "cid_inc":
                     ReportsList.Sort((n1, n2) => Int32.Parse(n2.CompanyId.Substring(1)).CompareTo(Int32.Parse(n1.CompanyId.Substring(1))));
                     break;
-
                 default:
                     ReportsList = ReportsList.OrderBy(r => r.Id).ToList();
                     break;
@@ -59,6 +59,7 @@ namespace BookManReportmentWeb.Models
             //Dashboard statistic
             if (datetime.Year != 0001)
             {
+                ViewBag.Notify = null;
                 var filterdReports = ReportRepository.GetReportsByCreatedDate(datetime);
                 ReportsList = filterdReports.ToList();
             }

@@ -22,6 +22,7 @@ namespace BookManagementWeb.Models
             var categoriesList = categoryRepository.GetCategories().ToList();
             if (!String.IsNullOrEmpty(searchString))
             {
+                ViewBag.Notify = null;
                 categoriesList = categoriesList.Where(c => c.CategoryId.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                        || c.CategoryName.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
             }

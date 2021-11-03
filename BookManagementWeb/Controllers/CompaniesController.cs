@@ -23,6 +23,7 @@ namespace BookManagementWeb.Models
             var CompanyList = CompanyRepository.GetCompanies().ToList();
             if (!String.IsNullOrEmpty(searchString))
             {
+                ViewBag.Notify = null;
                 CompanyList = CompanyList.Where(cm => cm.CompanyId.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                        || cm.CompanyName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                        || cm.CompanyEmail.Contains(searchString, StringComparison.OrdinalIgnoreCase)

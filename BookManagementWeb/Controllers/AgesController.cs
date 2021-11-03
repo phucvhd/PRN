@@ -21,6 +21,7 @@ namespace BookManagementWeb.Models
             var AgesList = AgeRepository.GetAges();
             if (!String.IsNullOrEmpty(searchString))
             {
+                ViewBag.Notify = null;
                 AgesList = AgesList.Where(a => a.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                        || a.ForAgesId.Contains(searchString, StringComparison.OrdinalIgnoreCase));
             }

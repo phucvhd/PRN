@@ -154,8 +154,11 @@
 @{
     if (ViewBag.Notify != null)
     {
-        <script>
-        window.onload = function () { alert("@ViewBag.Notify") }
-        </script>
+    <script>
+            window.onload = function () {
+                alert("@ViewBag.Notify")
+                
+            }
+    </script>
     }
 }

@@ -43,6 +43,7 @@ namespace BookManagementWeb.Models
             var productList = productRepository.GetProducts().ToList();
             if (!String.IsNullOrEmpty(searchString))
             {
+                ViewBag.Notify = null;
                 productList = productList.Where(p => p.ProductId.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                        || p.ProductName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                        || p.Isbn10.Contains(searchString, StringComparison.OrdinalIgnoreCase)
@@ -68,6 +69,7 @@ namespace BookManagementWeb.Models
             var categoryId = CategoryID ?? null;
             if (categoryId != null) 
             {
+                ViewBag.Notify = null;
                 productList = productList.Where(p => p.CategoryId.Equals(categoryId)).ToList();
             }
             ViewBag.CategoryID = categoryId;
