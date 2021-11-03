@@ -30,7 +30,6 @@ namespace BookManagementWeb.Models
                 case "id_desc":
                     AgesList = AgesList.OrderByDescending(a => a.ForAgesId);
                     break;
-                
                 default:
                     AgesList = AgesList.OrderBy(a => a.ForAgesId);
                     break;

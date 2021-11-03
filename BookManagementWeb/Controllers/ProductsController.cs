@@ -134,7 +134,6 @@ namespace BookManagementWeb.Models
                 {
                     product.CreatedDate = DateTime.Now;
                     product.LastModified = DateTime.Now;
-                    product.Image = "/assest/"+ product.Image;
                     productRepository.InsertProduct(product);
                     TempData["product"] = JsonConvert.SerializeObject(product);
                 }
