@@ -1,4 +1,5 @@
 ﻿using System;
+using BookManagementLib.BusinessObject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -133,7 +134,7 @@ namespace BookManagementLib.DataAccess
 
                 entity.Property(e => e.Image)
                     .IsRequired()
-                    .HasMaxLength(1000)
+                    .HasMaxLength(int.MaxValue)
                     .IsUnicode(false)
                     .HasColumnName("image");
 
@@ -254,7 +255,7 @@ namespace BookManagementLib.DataAccess
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasMaxLength(1000)
+                    .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("password");
 
@@ -264,6 +265,10 @@ namespace BookManagementLib.DataAccess
                     .IsUnicode(false)
                     .HasColumnName("phoneNum")
                     .IsFixedLength(true);
+
+                entity.Property(e => e.RoleId)
+                    .IsRequired()
+                    .HasColumnName("roleId");
             });
 
             OnModelCreatingPartial(modelBuilder);

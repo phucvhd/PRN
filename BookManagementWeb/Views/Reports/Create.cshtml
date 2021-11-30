@@ -1,14 +1,14 @@
-﻿@using BookManagementLib.DataAccess;
-@model BookManagementLib.DataAccess.Report
+﻿@using BookManagementLib.BusinessObject;
+@model BookManagementLib.BusinessObject.Report
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
     //Product product = ViewData["product"] as Product;
 }
 
 <h1>Create</h1>
-
+<p class="btn-danger">@ViewBag.Message</p>
 <h4>Report</h4>
 <hr />
 <div class="row">
@@ -30,9 +30,14 @@
 
                             foreach (Company company in companies)
                             {
-                                <option value="@company.CompanyId">
-                                    @company.CompanyName
-                                </option>
+                                var role = company.IsReceiver ? "Receiver" : "Supplier";
+                                if (role.Equals("Supplier"))
+                                {
+                                    <option value="@company.CompanyId">
+                                       @company.CompanyName - @role
+                                    </option>
+                                }
+                                
                             }
                         }
 

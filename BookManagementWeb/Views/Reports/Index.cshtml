@@ -1,21 +1,21 @@
-﻿@model IEnumerable<BookManagementLib.DataAccess.Report>
+﻿@model IEnumerable<BookManagementLib.BusinessObject.Report>
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
     var dashboardStatistic = ViewData["DashboardStatistic"] as Tuple<int, int>;
     DateTime datetime = new DateTime();
 }
-
+<link rel="stylesheet" href="~/css/views.css" />
 <h1>Reports</h1>
 
-<div><b>Dashboard statistic</b><br /></div>
+<div style="font-size: 1.5em; text-align: center;"><b>Dashboard statistic</b><br /></div>
 <table class="table">
-    <tr>
+    <tr style="text-align: center;">
         <th>This Month Import</th>
         <th>This Month Export</th>
     </tr>
-    <tr>
+    <tr style="text-align: center;">
         <td class="text-success">@dashboardStatistic.Item1</td>
         <td class="text-danger">@dashboardStatistic.Item2</td>
 
@@ -27,7 +27,7 @@
 {
     <p>
         Filter by Created Date: @Html.EditorFor(d => datetime, "FilterDate")
-        <button class="btn-outline-light">@Html.ActionLink("Clear", "Index", "Reports", new { datetime = "01/01/0001" }, new { @style = "text-decoration:none; color:black" })</button>
+        <button class="btn-outline-light">@Html.ActionLink("Clear", "Index", "Reports", new { datetime = "01/01/2000" }, new { @style = "text-decoration:none; color:black" })</button>
 
         <input type="submit" value="Search" />
     </p>
@@ -39,12 +39,12 @@
                 @Html.ActionLink("Id", "Index", new { sortOrder = ViewBag.IdSortParm })
             </th>
             <th>
-                @Html.ActionLink("Category", "Index", new { sortOrder = ViewBag.CidSortParm })
+                @Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CidSortParm })
             </th>
             <th>
                 @Html.ActionLink("Product", "Index", new { sortOrder = ViewBag.PidSortParm })
             </th>
-            <th>
+            <th id="number">
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
@@ -93,6 +93,12 @@
                 <td>
 
                     @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    @if ((int)TempData.Peek("role") == 2)
+                    {
+                        <p>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</p>
+                    }
+
+
 
                 </td>
             </tr>

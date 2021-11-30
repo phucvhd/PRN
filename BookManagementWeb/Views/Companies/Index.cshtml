@@ -1,12 +1,13 @@
-﻿@model IEnumerable<BookManagementLib.DataAccess.Company>
+﻿@model IEnumerable<BookManagementLib.BusinessObject.Company>
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
 }
-
-<h1>Index</h1>
-
+<link rel="stylesheet" href="~/css/views.css" />
+<h1>Companies</h1>
+<p class="btn-info">@ViewBag.Notify</p>
+<p>@TempData["Message"]</p>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -92,14 +93,3 @@
    class="btn btn-default @ViewBag.NextDisabled">
     Next
 </a>
-@{
-    if (ViewBag.Notify != null)
-    {
-        <script>
-            window.onload = function () {
-                alert("@ViewBag.Notify")
-                @ViewBag.Notify = ""
-            }
-        </script>
-    }
-}

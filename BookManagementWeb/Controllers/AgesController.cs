@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BookManagementLib.DataAccess;
-using BookManagementLib.Repository;
+using BookManagementLib.BusinessObject;
+using BookManagementLib.DataAccess.Repository;
 
 namespace BookManagementWeb.Models
 {
@@ -16,60 +16,94 @@ namespace BookManagementWeb.Models
         // GET: AgesController
         public ActionResult Index(string sortOrder, string searchString, string notify, int? pageNumber)
         {
-            ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
-            ViewBag.Notify = notify;
-            var AgesList = AgeRepository.GetAges();
-            if (!String.IsNullOrEmpty(searchString))
+            try
             {
-                ViewBag.Notify = null;
-                AgesList = AgesList.Where(a => a.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-                                       || a.ForAgesId.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+                //authentication
+                if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+                ViewBag.IdSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+                ViewBag.Notify = notify;
+                var AgesList = AgeRepository.GetAges();
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    pageNumber = 0;
+                    ViewBag.Notify = null;
+                    AgesList = AgesList.Where(a => a.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                           || a.ForAgesId.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+                }
+                switch (sortOrder)
+                {
+                    case "id_desc":
+                        AgesList = AgesList.OrderByDescending(a => a.ForAgesId);
+                        break;
+                    default:
+                        AgesList = AgesList.OrderBy(a => a.ForAgesId);
+                        break;
+                }
+
+                //Paging
+                var pageIndex = pageNumber ?? 0;
+                if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
+                if ((pageIndex * 10 + 10) < AgesList.Count()) AgesList = AgesList.ToList().GetRange(pageIndex * 10, 10);
+                else
+                {
+                    ViewBag.NextDisabled = "disabled";
+                    AgesList = AgesList.ToList().GetRange((pageIndex) * 10, AgesList.Count() - (pageIndex) * 10);
+                }
+                ViewBag.PageIndex = pageIndex;
+
+                return View(AgesList);
             }
-            switch (sortOrder)
+            catch(Exception ex)
             {
-                case "id_desc":
-                    AgesList = AgesList.OrderByDescending(a => a.ForAgesId);
-                    break;
-                default:
-                    AgesList = AgesList.OrderBy(a => a.ForAgesId);
-                    break;
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message;;
+                return RedirectToAction("Logout", "Home");
             }
 
-            //Paging
-            var pageIndex = pageNumber ?? 0;
-            if (pageIndex == 0) ViewBag.PreDisabled = "disabled";
-            if ((pageIndex * 10 + 10) < AgesList.Count()) AgesList = AgesList.ToList().GetRange(pageIndex * 10, 10);
-            else
-            {
-                ViewBag.NextDisabled = "disabled";
-                AgesList = AgesList.ToList().GetRange((pageIndex) * 10, AgesList.Count() - (pageIndex) * 10);
-            }
-            ViewBag.PageIndex = pageIndex;
-
-            return View(AgesList);
         }
 
         // GET: AgesController/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                //authentication
+                if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var Age = AgeRepository.GetAgeByID(id);
+                if (Age == null)
+                {
+                    return NotFound();
+                }
+                return View(Age);
             }
-            var Age = AgeRepository.GetAgeByID(id);
-            if (Age == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message;;
+                return RedirectToAction("Logout", "Home");
             }
-            return View(Age);
+
         }
 
         // GET: AgesController/Create
         public ActionResult Create()
         {
-            string newid =AgeRepository.AgeIdGenerate();
-            ViewBag.newid = newid;
-            return View();
+            try
+            {
+                //authentication
+                if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+                string newid = AgeRepository.AgeIdGenerate();
+                ViewBag.newid = newid;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message;;
+                return RedirectToAction("Logout", "Home");
+            }
+
         }
 
         // POST: AgesController/Create
@@ -79,32 +113,56 @@ namespace BookManagementWeb.Models
         {
             try
             {
-                if (ModelState.IsValid)
+                //authentication
+                if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+                try
                 {
-                    AgeRepository.InsertAge(Age);
+                    if (ModelState.IsValid)
+                    {
+                        AgeRepository.InsertAge(Age);
+                    }
+                    return RedirectToAction(nameof(Index), new { notify = "Create successfully!" });
                 }
-                return RedirectToAction(nameof(Index), new { notify = "Create success !" });
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    string newid = AgeRepository.AgeIdGenerate();
+                    ViewBag.newid = newid;
+                    return View(Age);
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
-                return View(Age);
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message;;
+                return RedirectToAction("Logout", "Home");
             }
+
         }
 
         // GET: AgesController/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                //authentication
+                if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var Age = AgeRepository.GetAgeByID(id);
+                if (Age == null)
+                {
+                    return NotFound();
+                }
+                return View(Age);
             }
-            var Age = AgeRepository.GetAgeByID(id);
-            if (Age == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message;;
+                return RedirectToAction("Logout", "Home");
             }
-            return View(Age);
+
         }
 
         // POST: AgesController/Edit/5
@@ -114,32 +172,54 @@ namespace BookManagementWeb.Models
         {
             try
             {
-                if (ModelState.IsValid)
+                //authentication
+                if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+                try
                 {
-                    AgeRepository.UpdateAge(Age);
+                    if (ModelState.IsValid)
+                    {
+                        AgeRepository.UpdateAge(Age);
+                    }
+                    return RedirectToAction(nameof(Index), new { notify = "Update successfully!" });
                 }
-                return RedirectToAction(nameof(Index),new { notify = "Update success !" });
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(Age);
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
-                return View(Age);
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message;;
+                return RedirectToAction("Logout", "Home");
             }
+
         }
 
         // GET: AgesController/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                //authentication
+                if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var Age = AgeRepository.GetAgeByID(id);
+                if (Age == null)
+                {
+                    return NotFound();
+                }
+                return View(Age);
             }
-            var Age = AgeRepository.GetAgeByID(id);
-            if (Age == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message;;
+                return RedirectToAction("Logout", "Home");
             }
-            return View(Age);
+
         }
 
         // POST: AgesController/Delete/5
@@ -149,14 +229,34 @@ namespace BookManagementWeb.Models
         {
             try
             {
-                AgeRepository.DeleteAge(id);
-                return RedirectToAction(nameof(Index), new { notify = "Delete success !" });
+                //authentication
+                if (TempData.Peek("userEmail") == null) return RedirectToAction("Login", "Home");
+                try
+                {
+                    ProductRepository productRepository = new ProductRepository();
+                    var products = new List<Product>();
+                    products = productRepository.GetProducts().Where(p => p.ForAgesId.Equals(id)).ToList();
+                    if (products.Any())
+                    {
+                        TempData["Message"] = "This Age range is binding with another Products.";
+                        return RedirectToAction(nameof(Delete), new { id = id });
+                    }
+
+                    AgeRepository.DeleteAge(id);
+                    return RedirectToAction(nameof(Index), new { notify = "Delete successfully!" });
+                }
+                catch (Exception ex)
+                {
+                    TempData["Message"] = ex.Message;
+                    return RedirectToAction(nameof(Delete), new { id = id });
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
-                return View();
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message;;
+                return RedirectToAction("Logout", "Home");
             }
+
         }
     }
 }

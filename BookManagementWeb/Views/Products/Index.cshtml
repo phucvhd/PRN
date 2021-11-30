@@ -1,14 +1,15 @@
-﻿@model IEnumerable<BookManagementLib.DataAccess.Product>
-@using BookManagementLib.DataAccess;
+﻿@model IEnumerable<BookManagementLib.BusinessObject.Product>
+@using BookManagementLib.BusinessObject;
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
     var categories = ViewData["categories"] as List<Category>;
 }
-
-<h1>Index</h1>
-
+<link rel="stylesheet" href="~/css/views.css" />
+<h1>Products</h1>
+<p class="btn-info">@ViewBag.Notify</p>
+<p class="btn-info">@TempData["Msg"]</p>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -21,13 +22,13 @@
 }
 @using (Html.BeginForm())
 {
-<p>
-    Category: @Html.DropDownList("CategoryID", new SelectList(categories, "CategoryId", "CategoryName", ViewBag.CategoryID), "Select Category")
-    <input type="submit" value="Filter" />
-</p>
+    <p>
+        Category: @Html.DropDownList("CategoryID", new SelectList(categories, "CategoryId", "CategoryName", ViewBag.CategoryID), "Select Category")
+        <input type="submit" value="Filter" />
+    </p>
 }
 <p class="text-info">Stock: @ViewBag.Stock</p>
-<table class="table">
+<table class="table" >
     <thead>
         <tr>
             <th>
@@ -86,8 +87,8 @@
                     @Html.DisplayFor(modelItem => item.ProductId)
                 </td>
                 <td>
-                    <img src="@item.Image" runat="server"/>
-                    @Html.DisplayFor(modelItem => item.Image)
+                    <img src="@item.Image" runat="server" class="form-control-range" />
+                    @*@Html.DisplayFor(modelItem => item.Image)*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Isbn10)
@@ -128,11 +129,16 @@
                 </td>
 
                 -->
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
-                </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductId })
+                @{ if ((int) TempData.Peek("role") == 2)
+                    {
+                        <a> | @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })</a>
+                    }
+                }
+                
+            </td>
             </tr>
         }
     </tbody>
@@ -151,14 +157,3 @@
    class="btn btn-default @ViewBag.NextDisabled">
     Next
 </a>
-@{
-    if (ViewBag.Notify != null)
-    {
-    <script>
-            window.onload = function () {
-                alert("@ViewBag.Notify")
-                
-            }
-    </script>
-    }
-}

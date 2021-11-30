@@ -1,8 +1,8 @@
-﻿@model BookManagementLib.DataAccess.Product
+﻿@model BookManagementLib.BusinessObject.Product
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
 }
 
 <h1>Details</h1>
@@ -10,6 +10,8 @@
 <div>
     <h4>Product</h4>
     <hr />
+    <div>@Html.ActionLink("Export / Import", "Port", "Reports", new { productId = Model.ProductId })</div>
+    
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ProductId)
@@ -75,7 +77,8 @@
             @Html.DisplayNameFor(model => model.Image)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Image)
+            @*@Html.DisplayFor(model => model.Image)*@
+            <img src="@Model.Image" runat="server" />
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ForAgesId)

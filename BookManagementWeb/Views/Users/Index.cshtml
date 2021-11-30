@@ -1,11 +1,11 @@
-﻿@model IEnumerable<BookManagementLib.DataAccess.User>
+﻿@model IEnumerable<BookManagementLib.BusinessObject.User>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Users Management";
+    Layout = "~/Views/Shared/_Layout" + TempData.Peek("role") + ".cshtml";
 }
-
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/views.css" />
+<h1>Users</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -25,7 +25,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Password)
             </th>
-            
+            <th>
+                @Html.DisplayNameFor(model => model.RoleId)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -41,9 +44,16 @@
                 @Html.DisplayFor(modelItem => item.PhoneNum)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+                ******
             </td>
-            
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  email=item.Email  }) |
+                @Html.ActionLink("Details", "Details", new { email = item.Email }) |
+                @Html.ActionLink("Delete", "Delete", new { email = item.Email })
+            </td>
         </tr>
 }
     </tbody>

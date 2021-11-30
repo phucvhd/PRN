@@ -5765,11 +5765,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj",
+      "projectUniqueName": "C:\\Users\\Steve\\OneDrive\\Desktop\\ASPNetCoreGroupProject\\BookManagementLib\\BookManagementLib.csproj",
       "projectName": "BookManagementLib",
-      "projectPath": "D:\\VS.NET\\PRN_asm\\BookManagementLib\\BookManagementLib.csproj",
+      "projectPath": "C:\\Users\\Steve\\OneDrive\\Desktop\\ASPNetCoreGroupProject\\BookManagementLib\\BookManagementLib.csproj",
       "packagesPath": "C:\\Users\\Steve\\.nuget\\packages\\",
-      "outputPath": "D:\\VS.NET\\PRN_asm\\BookManagementLib\\obj\\",
+      "outputPath": "C:\\Users\\Steve\\OneDrive\\Desktop\\ASPNetCoreGroupProject\\BookManagementLib\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Steve\\AppData\\Roaming\\NuGet\\NuGet.Config",

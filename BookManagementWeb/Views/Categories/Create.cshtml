@@ -1,8 +1,8 @@
-﻿@model BookManagementLib.DataAccess.Category
+﻿@model BookManagementLib.BusinessObject.Category
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
 }
 
 <h1>Create</h1>

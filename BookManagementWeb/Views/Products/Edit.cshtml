@@ -1,9 +1,9 @@
-﻿@using BookManagementLib.DataAccess
-@model BookManagementLib.DataAccess.Product
+﻿@using BookManagementLib.BusinessObject
+@model BookManagementLib.BusinessObject.Product
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
 }
 @{
     IEnumerable<Category> categories = ViewData["categoryList"] as IEnumerable<Category>;
@@ -29,12 +29,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Isbn10" class="control-label"></label>
-                <input asp-for="Isbn10" class="form-control" />
+                <input asp-for="Isbn10" class="form-control" id="isbn10"/>
                 <span asp-validation-for="Isbn10" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Isbn13" class="control-label"></label>
-                <input asp-for="Isbn13" class="form-control" />
+                <input asp-for="Isbn13" class="form-control" id="isbn13"/>
                 <span asp-validation-for="Isbn13" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,7 +50,7 @@
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" asp-items="@(new SelectList(categories,"CategoryId","CategoryName", Model.CategoryId))" class="form-control">
-                    
+
                     <option>--- Select one ---</option>
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -78,9 +78,31 @@
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
+                <input type="file" id="file" onchange="loadBase64()" />
+                <img src="@Model.Image"/>
+                <input asp-for="Image" id="img-string" class="form-control" type="hidden" value="@Model.Image"/>
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
+            <script>
+                function loadBase64() {
+                    var file = document.getElementById("file").files[0];
+                    getBase64(file); // prints the base64 string
+                }
+
+                function getBase64(file) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function () {
+                        document.getElementById("img-string").value = reader.result;
+                        console.log(document.getElementById("img-string").value);
+                    };
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                    };
+                }
+
+
+            </script>
             <div class="form-group">
                 <label asp-for="ForAgesId" class="control-label"></label>
                 <select asp-for="ForAgesId" asp-items="@(new SelectList(ages,"ForAgesId","Description", Model.ForAgesId))" class="form-control">
@@ -93,16 +115,16 @@
                 <input asp-for="CreatedDate" class="form-control" readonly />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
+            <!--
             <div class="form-group">
                 <label asp-for="LastModified" class="control-label"></label>
                 <input asp-for="LastModified" class="form-control" />
                 <span asp-validation-for="LastModified" class="text-danger"></span>
             </div>
-            <!--
 
-            -->
+    -->
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" onsubmit="return validate()" />
+                <input type="submit" value="Save" class="btn btn-primary" onclick="return validate()"/>
             </div>
         </form>
     </div>
@@ -123,6 +145,8 @@
         </script>
     }
 }
+<!--
+    
 <script>
     function validate() {
         var x = document.getElementById('port').value
@@ -133,6 +157,23 @@
             return false
         }
         @ViewBag.Port=x
+        return true
+    }
+</script>
+-->
+<script>
+    function validate() {
+        var isbn10 = document.getElementById('isbn10').value.trim()
+        var isbn13 = document.getElementById('isbn13').value.trim()
+
+        if (isbn10 == null || isbn10 == "") {
+            alert("ISBN is Empty")
+            return false
+        }
+        if (isbn13 == null || isbn13 == "") {
+            alert("ISBN is Empty")
+            return false
+        }
         return true
     }
 </script>

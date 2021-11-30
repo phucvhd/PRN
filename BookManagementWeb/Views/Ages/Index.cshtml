@@ -1,11 +1,11 @@
-﻿@model IEnumerable<BookManagementLib.DataAccess.Age>
+﻿@model IEnumerable<BookManagementLib.BusinessObject.Age>
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
 }
-
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/views.css" />
+<h1>Ages</h1>
 
 <p>
     <a asp-action="Create">Create New</a>

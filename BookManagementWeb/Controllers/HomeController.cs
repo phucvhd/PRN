@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using BookManagementLib.DataAccess;
-using BookManagementLib.Repository;
+using BookManagementLib.BusinessObject;
+using BookManagementLib.DataAccess.Repository;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 
@@ -40,6 +40,7 @@ namespace BookManagementWeb.Controllers
         }
         public ActionResult Login()
         {
+            ViewBag.Message = TempData["msg"];
             return View();
         }
 
@@ -49,26 +50,34 @@ namespace BookManagementWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool status = userRepository.CheckLogin(user.Email, user.Password);
-                if (status)
+                int status = userRepository.CheckLogin(user.Email, user.Password);
+                if (status != 0)
                 {
                     TempData["userEmail"] = user.Email;
+                    TempData["role"] = status;
                     //HttpContext.Session.SetString("userEmail",user.Email);
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    ViewBag.Notify = "Wrong Email or Password";
+                    ViewBag.Notify = "Wrong Email or Password!";
                     return View();
                 }
             }
-            ViewBag.Notify = "Login Fail !!!";
+            ViewBag.Notify = "Login Failed!!!";
             return View();
         }
 
         public ActionResult Logout()
         {
-            TempData.Remove("userEmail");
+            if(TempData.Peek("userEmail") != null)
+            {
+                TempData.Remove("userEmail");
+            }
+            if (TempData.Peek("role") != null)
+            {
+                TempData.Remove("role");
+            }
             return RedirectToAction("Login");
         }
 

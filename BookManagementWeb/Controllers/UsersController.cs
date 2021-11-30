@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BookManagementLib.DataAccess;
-using BookManagementLib.Repository;
+using BookManagementLib.BusinessObject;
+using BookManagementLib.DataAccess.Repository;
 
 namespace BookManagementWeb.Models
 {
@@ -16,30 +16,75 @@ namespace BookManagementWeb.Models
         // GET: UsersController
         public ActionResult Index()
         {
-            var userList = userRepository.GetUsers();
-            return View(userList);
+            try
+            {
+                //authentication
+                if (TempData.Peek("role") == null || (int)TempData.Peek("role") != 2)
+                {
+                    TempData["msg"] = "Your role can not do this function!";
+                    return RedirectToAction("Logout", "Home");
+                }
+                var userList = userRepository.GetUsers();
+                return View(userList);
+            }
+            catch (Exception ex)
+            {
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message; ;
+                return RedirectToAction("Logout", "Home");
+            }
+
         }
 
         // GET: UsersController/Details/5
         public ActionResult Details(string email)
         {
-            if (email == null)
+            try
             {
-                return NotFound();
+                //authentication
+                if (TempData.Peek("role") == null || (int)TempData.Peek("role") != 2)
+                {
+                    TempData["msg"] = "Your role can not do this function!";
+                    return RedirectToAction("Logout", "Home");
+                }
+                if (email == null)
+                {
+                    return NotFound();
+                }
+
+                var user = userRepository.GetUserByEmail(email);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message; ;
+                return RedirectToAction("Logout", "Home");
             }
 
-            var user = userRepository.GetUserByEmail(email);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
         }
 
         // GET: UsersController/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                //authentication
+                if (TempData.Peek("role") == null || (int)TempData.Peek("role") != 2)
+                {
+                    TempData["msg"] = "Your role can not add users!";
+                    return RedirectToAction("Logout", "Home");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message; ;
+                return RedirectToAction("Logout", "Home");
+            }
+
         }
 
         // POST: UsersController/Create
@@ -49,33 +94,63 @@ namespace BookManagementWeb.Models
         {
             try
             {
-                if (ModelState.IsValid)
+                //authentication
+                if (TempData.Peek("role") == null || (int)TempData.Peek("role") != 2)
                 {
-                    userRepository.InsertUser(user);
+                    TempData["msg"] = "Your role can not add users!";
+                    return RedirectToAction("Logout", "Home");
                 }
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        userRepository.InsertUser(user);
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(user);
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
-                return View(user);
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message; ;
+                return RedirectToAction("Logout", "Home");
             }
+
         }
 
         // GET: UsersController/Edit/5
         public ActionResult Edit(string email)
         {
-            if (email == null)
+            try
             {
-                return NotFound();
+                //authentication
+                if (TempData.Peek("role") == null || (int)TempData.Peek("role") != 2)
+                {
+                    TempData["msg"] = "Your role can not edit users!";
+                    return RedirectToAction("Logout", "Home");
+                }
+                if (email == null)
+                {
+                    return NotFound();
+                }
+
+                var user = userRepository.GetUserByEmail(email);
+                if (user == null)
+                {
+                    return View(nameof(Index));
+                }
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message; ;
+                return RedirectToAction("Logout", "Home");
             }
 
-            var user = userRepository.GetUserByEmail(email);
-            if (user == null)
-            {
-                return View(nameof(Index));
-            }
-            return View(user);
         }
 
         // POST: UsersController/Edit/5
@@ -85,53 +160,116 @@ namespace BookManagementWeb.Models
         {
             try
             {
-                if (email != user.Email)
+                //authentication
+                if (TempData.Peek("role") == null || (int)TempData.Peek("role") != 2)
                 {
-                    return NotFound();
+                    TempData["msg"] = "Your role can not edit users!";
+                    return RedirectToAction("Logout", "Home");
                 }
-                if (ModelState.IsValid)
+                try
                 {
-                    userRepository.UpdateUser(user);
+                    if (email != user.Email)
+                    {
+                        return NotFound();
+                    }
+                    if (ModelState.IsValid)
+                    {
+                        userRepository.UpdateUser(user);
+                    }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View();
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
-                return View();
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message; ;
+                return RedirectToAction("Logout", "Home");
             }
+
         }
 
         // GET: UsersController/Delete/5
         public ActionResult Delete(string email)
         {
-            if (email == null)
+            try
             {
-                return NotFound();
+                //authentication
+                if (TempData.Peek("role") == null || (int)TempData.Peek("role") != 2)
+                {
+                    TempData["msg"] = "Your role can not delete users!";
+                    return RedirectToAction("Logout", "Home");
+                }
+                if (email == null)
+                {
+                    return NotFound();
+                }
+                var user = userRepository.GetUserByEmail(email);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return View(user);
             }
-            var user = userRepository.GetUserByEmail(email);
-            if (user == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message; ;
+                return RedirectToAction("Logout", "Home");
             }
-            return View(user);
+
         }
 
         // POST: UsersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string email, User user)
+        public ActionResult Delete(string email, string confirm)
         {
             try
             {
-                userRepository.DeleteUser(email);
-                return RedirectToAction(nameof(Index));
+                //authentication
+                if (TempData.Peek("role") == null || (int)TempData.Peek("role") != 2)
+                {
+                    TempData["msg"] = "Your role can not delete users!";
+                    return RedirectToAction("Logout", "Home");
+                }
+                try
+                {
+                    if (confirm != null && confirm.Equals("yes"))
+                    {
+                        ReportRepository reportRepository = new ReportRepository();
+                        var reports = new List<Report>();
+                        reports = reportRepository.GetReports().Where(r => r.UserEmail.Equals(email)).ToList();
+                        if (reports.Any())
+                        {
+                            TempData["msg"] = "User is binding with another report!";
+                            return RedirectToAction(nameof(Delete), new { email = email });
+                        }
+
+                        userRepository.DeleteUser(email);
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        TempData["msg"] = "Something went wrong!!";
+                        return RedirectToAction(nameof(Delete), new { email = email });
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    TempData["msg"] = ex.Message;
+                    return RedirectToAction(nameof(Delete), new { email = email });
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
-                return View();
+                TempData["msg"] = "Something went wrong! Logged out! Error: " + ex.Message; ;
+                return RedirectToAction("Logout", "Home");
             }
+
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿@model IEnumerable<BookManagementLib.DataAccess.Category>
+﻿@model IEnumerable<BookManagementLib.BusinessObject.Category>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Category Management";
+    Layout = "~/Views/Shared/_Layout"+TempData.Peek("role")+".cshtml";
 }
-
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/views.css" />
+<h1>Categories</h1>
 
 <p>
     <a asp-action="Create">Create New</a>

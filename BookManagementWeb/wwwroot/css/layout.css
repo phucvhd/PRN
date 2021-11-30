@@ -1,0 +1,24 @@
+﻿@media screen and (min-width: 480px) {
+
+    .navbar-brand {
+        font-size: 2em;
+    }
+
+    ul {
+        height: 3em;
+    }
+
+    li:hover {
+        opacity: 0.9;
+        font-size: 110%;
+        transition-duration: 0.7s;
+        border-bottom: groove;
+    }
+
+    #useremail {
+        text-decoration: none;
+        transition: none;
+        opacity: 1;
+        font-size: initial;
+    }
+}

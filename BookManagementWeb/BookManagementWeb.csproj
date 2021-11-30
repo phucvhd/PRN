@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\views.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\views.css" />
+    <None Include="wwwroot\css\layout.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BookManagementLib\BookManagementLib.csproj" />
   </ItemGroup>
 
